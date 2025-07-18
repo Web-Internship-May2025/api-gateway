@@ -1,0 +1,62 @@
+server:
+  port: 8080
+  servlet:
+    context-path: "/"
+
+spring:
+  application:
+    name: api-gateway
+  security:
+      user:
+        name: user
+        password: 1234
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+
+swagger:
+  services:
+    - name: user-management-service
+      url: ${USER_MANAGEMENT_SERVICE_URL:http://localhost:8081/users/v3/api-docs}
+    - name: policy-service
+      url: ${POLICY_SERVICE_URL:http://localhost:8082/policies/v3/api-docs}
+    - name: payment-service
+      url: ${PAYMENT_SERVICE_URL:http://localhost:8083/payments/v3/api-docs}
+    - name: car-service
+      url: ${CAR_SERVICE_URL:http://localhost:8084/cars/v3/api-docs}
+    - name: reporting-service
+      url: ${REPORTING_SERVICE_URL:http://localhost:8085/reporting/v3/api-docs}
+    - name: claims-management-service
+      url: ${CLAIMS_MANAGEMENT_SERVICE_URL:http://localhost:8086/claims/v3/api-docs}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    urls:
+      - name: user-management-service
+        url: /v3/api-docs/user-management-service
+      - name: policy-service
+        url: /v3/api-docs/policy-service
+      - name: payment-service
+        url: /v3/api-docs/payment-service
+      - name: car-service
+        url: /v3/api-docs/car-service
+      - name: reporting-service
+        url: /v3/api-docs/reporting-service
+      - name: claims-management-service
+        url: /v3/api-docs/claims-management-service
